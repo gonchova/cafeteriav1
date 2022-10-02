@@ -28,17 +28,6 @@ class PedidosController extends Controller
     
     public function crear(Request $request)
     {  
-  /*      $rules = [
-        'id'  =>  'required'     
-        ];
-
-        $messages = [
-        'id.required' => 'Debe seleccionar un producto.'
-        ];
-
-    
-        $this->validate($request, $rules, $messages);
-*/       
         //return $request;
         $errores = false;
         $canpedido=$request->cantidad;
@@ -62,7 +51,7 @@ class PedidosController extends Controller
                         'idproducto' => $request->producto,
                         'tamanio' => $request->tamanio,
                         'cantidad'=>$canpedido,
-                        'idusuario' => 1//auth()->user()->id
+                        'idusuario' => auth()->user()->id
                         ]);
                     
                     DB::table('stocks')->where('idproducto',$request->producto)

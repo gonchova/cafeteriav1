@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'index'])->name('nuevopedido');
+Route::get('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'index'])->name('nuevopedido')->middleware('auth');;
 
-Route::post('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'crear'])->name('crearpedido');
+Route::post('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'crear'])->name('crearpedido')->middleware('auth');;
+
+Auth::routes();
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\PedidosController::class,'index'])->name('home')->middleware('auth');;
+
+Route::get('/logout', [App\Http\Controllers\LogOutController::class,'perform'])->name('logout')->middleware('auth');;
+

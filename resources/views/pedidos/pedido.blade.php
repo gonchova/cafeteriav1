@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -29,10 +32,7 @@
     </head>
 
     <body class="antialiased">
-  
-
-
-        <div class="relative flex items-top justify-center min-h-screen  items-center py-4 sm:pt-0">
+          <div class="relative flex items-top justify-center   items-center py-4 sm:pt-0">
 
 
            <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('crearpedido')}}" method="POST" >   
@@ -124,3 +124,4 @@
   
   
 </html>
+@endsection
