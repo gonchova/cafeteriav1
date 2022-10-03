@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/', [App\Http\Controllers\PedidosController::class,'index'])->name('index')->middleware('auth');
+
 Route::get('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'index'])->name('nuevopedido')->middleware('auth');;
 
 Route::post('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'crear'])->name('crearpedido')->middleware('auth');;
