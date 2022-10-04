@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Pedido;
 use App\Models\Stock;
 
+
 class PedidosController extends Controller
 {
     public function index()
     {
       $productos= Producto::all();
-      
-      return view("pedidos.pedido",compact("productos"));
+     // $detallepedido=Pedido::where('idusuario','=',auth()->user()->id)->get();
+
+      $detallepedido= DB::table('pedidos')
+      ->join('productos', 'pedidos.idproducto', '=', 'productos.id')
+      ->where('idusuario','=',auth()->user()->id)
+      ->select('pedidos.id', 'productos.descripcion', 'pedidos.tamanio','pedidos.cantidad')
+      ->get();
+     
+      return view("pedidos.pedido",compact("productos","detallepedido"));
     }
 
     public function listarProductos()
@@ -26,7 +34,7 @@ class PedidosController extends Controller
         
     }
     
-    public function crear(Request $request)
+    public function crearLineaPedido(Request $request)
     {  
         //return $request;
         $errores = false;
@@ -67,12 +75,52 @@ class PedidosController extends Controller
         }
 
         if ($errores == false){
-            return back()->with('mensaje', 'Pedido generado exitosamente!');
+            $productos= Producto::all();
+         //   $detallepedido=Pedido::where('idusuario','=',auth()->user()->id)->get();
+           $detallepedido= DB::table('pedidos')
+           ->join('productos', 'pedidos.idproducto', '=', 'productos.id')
+           ->where('idusuario','=',auth()->user()->id)
+           ->select('pedidos.id', 'productos.descripcion', 'pedidos.tamanio','pedidos.cantidad')
+           ->get();
+           
+            return view("pedidos.pedido",compact("productos","detallepedido"));
+            //return back()->with('mensaje', 'Pedido generado exitosamente!');
         }
         else{
+           // return view("pedidos.pedido",compact("productos","detallepedido"));
             return back()->withErrors('Sin stock del producto seleccionado');
         }
 
+    }
+
+/*
+    public function detallepedido($nropedido)
+    {
+      //$detallepedido= Pedido::where('id','=', $nropedido)->get();
+      $detallepedido= DB::table('pedidos')
+      ->join('productos', 'pedidos.idproducto', '=', 'productos.id')
+      ->where('idusuario','=',auth()->user()->id)
+      ->select('productos.id', 'productos.descripcion', 'pedidos.tamanio','pedidos.cantidad')
+      ->get();
+      
+      return view("pedidos.pedido",compact("detallepedido"));
+    }
+*/
+    public function EliminarLineaPedido($linea)
+    {
+      $detallepedido= Pedido::findorfail($linea);
+      $detallepedido->delete();
+      $productos= Producto::all();
+      //$detallepedido=Pedido::where('idusuario','=',auth()->user()->id)->get();
+      
+      
+      $detallepedido= DB::table('pedidos')
+      ->join('productos', 'pedidos.idproducto', '=', 'productos.id')
+      ->where('idusuario','=',auth()->user()->id)
+      ->select('pedidos.id', 'productos.descripcion', 'pedidos.tamanio','pedidos.cantidad')
+      ->get();
+      //return back()->compact("productos","detallepedido");
+      return view("pedidos.pedido",compact("productos","detallepedido"));
     }
 
 }

@@ -32,12 +32,10 @@
     </head>
 
     <body class="antialiased">
-          <div class="relative flex items-top justify-center   items-center py-4 sm:pt-0">
+        <div class="relative d-flex flex-column items-top justify-center  items-center py-4 sm:pt-0">
 
-
-           <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('crearpedido')}}" method="POST" >   
-            @csrf
-            <!--form class="form-horizontal border border-3 rounded-3 shadow-lg" method="GET"-->
+            <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('crearLineaPedido')}}" method="POST" >   
+               @csrf
                 <div class="row justify-center py-1">
                     <img src="/img/cafetería-logo.png" style="width:115px">
                 </div>
@@ -50,7 +48,7 @@
                             
                             <div class="form-group position-relative">
                                 <div class="form-group required col-auto  px-3 ">
-                                    <select class="form-select" name="producto" >
+                                    <select class="form-select" name="producto"  id ="producto">
                                         @if(count($productos))
                                         @foreach($productos as $prod)
                                             <option value="{{$prod->id}}">{{$prod->descripcion}}</option>
@@ -63,7 +61,7 @@
                                     <p class="text-white bg-dark justify-center">Cantidad</p>
                                 </div>
                                 <div class="form-group required col-auto px-5">
-                                    <select class="form-select" name="cantidad" >
+                                    <select class="form-select" name="cantidad" id="cantidad" >
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -96,22 +94,70 @@
                                     </div>
                                 </div>
                             </div>
-                                        
+
                             <div class="row mx-2">
-                                <button type="submit" class="btn btn-primary my-2  justify-center ">Realizar Pedido</button>
+                                <button type="submit" name="btnAgregar" class="btn btn-primary my-2  justify-center " >Agregar</button>
                             </div>
-                            @if (session('mensaje'))
-                                <div class="alert alert-success">{{session('mensaje')}}</div>
-                            @endif
-                        
-                            @if(count($errors)>0)
-                                @foreach($errors->all() as $err)
-                                    <div class="alert alert-danger my-1" >{{$err}}</li>
-                                @endforeach
-                            @endif
+                          
                     </div>
                 </div>
-            </form>
+
+                    @if (session('mensaje'))
+                    <div class="alert alert-success">{{session('mensaje')}}</div>
+                    @endif
+        
+                    @if(count($errors)>0)
+                        @foreach($errors->all() as $err)
+                            <div class="alert alert-danger my-1" >{{$err}}</div>
+                        @endforeach
+                    @endif
+                </form>   
+           
+     
+                     
+                <div class="relative d-flex flex-column justify-center   items-center  sm:pt-0">     
+                    <table class="table table-default table-hover table-bordered caption-top table-sm align-middle " >
+                        <caption class="mx-auto fw-bold fs-2 text-center ">Items del Pedido</caption>
+                        <thead class="table-secondary header-col">
+                            <tr class="wx-auto">
+                                <th scope="col fw-1" style="width: 10% ;display: none;" >idusuario</th>
+                                <th scope="col" style="width: 30%">Descripcion</th>
+                                <th scope="col" style="width: 30%">Tamaño</th>
+                                <th scope="col" style="width: 10%">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr>
+                                @foreach($detallepedido as $ped)
+                                    <tr  class="text-dark">    
+                                        <th scope="row " style="display: none;">{{$ped->id}}</th>
+                                            <td>{{$ped->descripcion}}</td>
+                                            <td>{{$ped->tamanio}}</td>
+                                            <td>{{$ped->cantidad}}</td>     
+                                            <td>
+                                                <form name="form-elimina-pedido" action="{{route('EliminarLineaPedido', $ped->id)}}" method="POST">    
+                                                    @csrf 
+                                                @method('DELETE')
+                                                
+                                                    <button type="submit"  name="btnEliminar" class="btn btn-danger" value="#">X</button>
+                                                
+                                                </form>
+                                            
+                                              
+                                            </td> 
+
+                                    </tr> 
+                                @endforeach    
+                            </tr>
+                        </tbody>
+                    </table>
+          
+                    <div class="row mx-2">
+                        <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center ">Realizar Pedido</button>
+                    </div>
+                
+                </div>   
+       
         </div>
     </body>
         
@@ -121,7 +167,29 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
         
-  
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <!--script>
+        $(document).ready(function(){
+            $('[name=btnAgregar]').click(function(){
+                var producto = $("#producto").val();
+                var productodesc = $( "#producto option:selected" ).text();
+                var cantidad = $("#cantidad").val();
+                console.log(producto);
+                var markup = "<tr><td style=width: 10% ;display: none; >" + producto + "</td><td>" + productodesc + "</td><td>" + cantidad + "</td></tr>";
+                $("table tbody").append(markup);
+            });
+    
+            // Find and remove selected table rows
+          /*  $(".delete-row").click(function(){
+                $("table tbody").find('input[name="record"]').each(function(){
+                    if($(this).is(":checked")){
+                        $(this).parents("tr").remove();
+                    }
+                });
+            });*/
+        });    
+    </script-->
   
 </html>
 @endsection

@@ -19,7 +19,7 @@ Route::get('/', [App\Http\Controllers\PedidosController::class,'index'])->name('
 
 Route::get('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'index'])->name('nuevopedido')->middleware('auth');;
 
-Route::post('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'crear'])->name('crearpedido')->middleware('auth');;
+Route::post('pedidos/nuevopedido',[App\Http\Controllers\PedidosController::class,'crearLineaPedido'])->name('crearLineaPedido')->middleware('auth');;
 
 Auth::routes();
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -27,3 +27,4 @@ Route::get('/home', [App\Http\Controllers\PedidosController::class,'index'])->na
 
 Route::get('/logout', [App\Http\Controllers\LogOutController::class,'perform'])->name('logout')->middleware('auth');;
 
+Route::delete('/pedidos/nuevopedido/{linea}',[App\Http\Controllers\PedidosController::class,'EliminarLineaPedido'])->name('EliminarLineaPedido')->middleware('auth');;
