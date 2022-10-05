@@ -34,7 +34,7 @@
 
     <body class="antialiased">
         <div class="relative d-flex flex-column items-top justify-center  items-center py-4 sm:pt-0">
-           <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('index')}}" method="GET" >  
+           <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('pdf')}}" method="GET" >  
                 <div class="row justify-center py-1">
                  <label class="fw-bold text-center">Pedido generado</label>  
                 </div>
@@ -43,9 +43,10 @@
                 </div> 
             
                 <label class="fw-bold text-center mx-2">GRACIAS POR ELEGIRNOS!</label>
-            
+               
                 <div class="row mx-2">
                     <button type="submit"  name="btnVolver" class="btn btn-primary my-2 justify-center" >Volver</button>
+                    <!--button type="submit"  name="btnVolver" class="btn btn-primary my-2 justify-center"  formtarget="_blank">imprimir ticket</button-->
                 </div>   
             
             </form>

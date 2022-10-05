@@ -100,12 +100,9 @@ class PedidosController extends Controller
     public function EliminarLineaPedido(Pedido $pedido)
     {     
       $detallepedido= Pedido::findorfail($pedido->id);
-          /*DB::table('stocks')->where('idproducto',$detallepedido->idproducto)
-      ->increment(['cantidad' =>  $detallepedido->cantidad ]);
-    */
+    
       DB::table('stocks')->where('idproducto',$detallepedido->idproducto)->increment('cantidad',$detallepedido->cantidad);
-    //  ->update(['column1' => DB::raw('cantidad +'+ $detallepedido->cantidad)]);
-
+    
       $detallepedido->delete();
       $productos= Producto::all();
 
@@ -121,16 +118,23 @@ class PedidosController extends Controller
 
     public function ConfirmarPedido()
     {  
+        $detallepedido= DB::table('pedidos')
+        ->join('productos', 'pedidos.idproducto', '=', 'productos.id')
+        ->where('idusuario','=',auth()->user()->id)
+        ->where('estado','=', 'P')
+        ->select('pedidos.id', 'pedidos.idproducto','productos.descripcion', 'pedidos.tamanio','pedidos.cantidad')
+        ->get();
+
         DB::transaction(function () 
         {
-            $detallepedido= DB::table('pedidos')
+            DB::table('pedidos')
             ->where('idusuario','=',auth()->user()->id)
             ->where('estado','=', 'P')
             ->update(['estado' => 'C']);
-
         });
-  
-        return view("pedidos.confirmacion");
+
+       return view("pedidos.pdf",compact('detallepedido'));
+       
     }
 
 }

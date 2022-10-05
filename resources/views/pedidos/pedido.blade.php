@@ -32,6 +32,11 @@
     </head>
 
     <body class="antialiased">
+        <?php
+        header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+        ?>
         <div class="relative d-flex flex-column items-top justify-center  items-center py-4 sm:pt-0">
 
             <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('crearLineaPedido')}}" method="POST" >   
@@ -147,7 +152,7 @@
           
                     <div class="row mx-2">
                         <form name="form-confirma-pedido"  action="{{route('ConfirmarPedido')}}" method="GET">    
-                            <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center" >Realizar Pedido</button>
+                            <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center"  >Realizar Pedido</button>
                         </form>
                     </div>
 
@@ -162,35 +167,12 @@
     
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-        
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
-    <!--script>
-        $(document).ready(function(){
-            $('[name=btnAgregar]').click(function(){
-                var producto = $("#producto").val();
-                var productodesc = $( "#producto option:selected" ).text();
-                var cantidad = $("#cantidad").val();
-                console.log(producto);
-                var markup = "<tr><td style=width: 10% ;display: none; >" + producto + "</td><td>" + productodesc + "</td><td>" + cantidad + "</td></tr>";
-                $("table tbody").append(markup);
-            });
-    
-            // Find and remove selected table rows
-          /*  $(".delete-row").click(function(){
-                $("table tbody").find('input[name="record"]').each(function(){
-                    if($(this).is(":checked")){
-                        $(this).parents("tr").remove();
-                    }
-                });
-            });*/
-        });    
-    </script-->
     <script>
 
         $(document).ready(function(){  
-  
-                   /*Obtengo el idpaciente a eliminar ya que se pierde en el Modal*/
+
            $('[name=btnConfirmar]').click(function(event){
          
                 let tabla = document.getElementById('tablaItems');
@@ -204,7 +186,11 @@
                
            });
     
-           
+
+            if (window.history.replaceState) { // verificamos disponibilidad
+                window.history.replaceState(null, null, window.location.href);
+            }
+
         });
     </script>  
 

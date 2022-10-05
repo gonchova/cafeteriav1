@@ -30,3 +30,6 @@ Route::get('/logout', [App\Http\Controllers\LogOutController::class,'perform'])-
 Route::delete('/pedidos/nuevopedido/{pedido}',[App\Http\Controllers\PedidosController::class,'EliminarLineaPedido'])->name('EliminarLineaPedido')->middleware('auth');;
 
 Route::get('/Confirmacion', [App\Http\Controllers\PedidosController::class,'ConfirmarPedido'])->name('ConfirmarPedido')->middleware('auth');
+
+Route::get('/pdf', [App\Http\Controllers\PDFController::class,'getPDF'])->name('getPDF');
+
