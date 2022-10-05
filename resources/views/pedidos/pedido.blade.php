@@ -53,10 +53,10 @@
                             
                             <div class="form-group position-relative">
                                 <div class="form-group required col-auto  px-3 ">
-                                    <select class="form-select" name="producto"  id ="producto">
+                                    <select class="form-select" name="producto"  id ="producto" onclick="getOption()">
                                         @if(count($productos))
                                         @foreach($productos as $prod)
-                                            <option value="{{$prod->id}}">{{$prod->descripcion}}</option>
+                                            <option value="{{$prod->id}}" id="{{$prod->precio}}">{{$prod->descripcion}} </option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -66,7 +66,7 @@
                                     <p class="text-white bg-dark justify-center">Cantidad</p>
                                 </div>
                                 <div class="form-group required col-auto px-5">
-                                    <select class="form-select" name="cantidad" id="cantidad" >
+                                    <select class="form-select" name="cantidad" id="cantidad" onclick="getOption()">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -79,25 +79,30 @@
                                 <div class="row">
                                     <div class="col relative flex items-top justify-center py-2">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="tamanio" id="tamaniochico" value="1" checked>
+                                            <input class="form-check-input" type="radio" name="tamanio" id="tamaniochico" value="1" onclick="getOption()" checked >
                                             <label class="form-check-label" for="tamaniochico">
                                             Chico
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="tamanio" id="tamaniomediano" value="2">
+                                            <input class="form-check-input" type="radio" name="tamanio" id="tamaniomediano" onclick="getOption()" value="2">
                                             <label class="form-check-label" for="tamaniomediano">
                                             Mediano
                                             </label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="tamanio" id="tamaniogrande" value="3">
+                                            <input class="form-check-input" type="radio" name="tamanio" id="tamaniogrande" onclick="getOption()"  value="3">
                                             <label class="form-check-label" for="tamaniogrande">
                                             Grande
                                             </label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row justify-center mx-5 px-5 text-dark">
+                                <p id = "precioDesc" class="text-white bg-dark justify-center"> </p> 
+                                
                             </div>
 
                             <div class="row mx-2">
@@ -152,7 +157,7 @@
           
                     <div class="row mx-2">
                         <form name="form-confirma-pedido"  action="{{route('ConfirmarPedido')}}" method="GET">    
-                            <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center"  >Realizar Pedido</button>
+                            <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center">Realizar Pedido</button>
                         </form>
                     </div>
 
@@ -168,7 +173,8 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
+    
+    
     <script>
 
         $(document).ready(function(){  
@@ -183,17 +189,41 @@
                     event.preventDefault();
                 }
 
-               
-           });
-    
+            });
+              
 
             if (window.history.replaceState) { // verificamos disponibilidad
                 window.history.replaceState(null, null, window.location.href);
             }
 
         });
-    </script>  
 
+
+
+                    
+       </script>  
+       
+       <script type="text/javascript">
+
+        function getOption() {
+            selectElement = document.querySelector('#producto');
+            precioDesc = document.getElementById('precioDesc');
+            cant = document.getElementById('cantidad').value;
+
+            tam =  document.getElementsByName('tamanio');
+            
+            tam.forEach((tama) => {
+                if (tama.checked) {
+                    tamanio=tama.value;
+                }
+        })
+
+            precioDesc.innerText = 'Precio: $'+ ((selectElement.options[selectElement.selectedIndex].id * cant) + (parseInt(tamanio) * 4) );
+
+            
+            //document.querySelector('.output').textContent = output;
+        }
+        </script>
 
 
 </html>

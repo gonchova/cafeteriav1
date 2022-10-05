@@ -35,11 +35,11 @@
                     @foreach($detallepedido as $ped)
                         <tr  class="text-dark">    
                             <td class="desc" width="0%">{{$ped->descripcion}}</td>
-                            <td class="unidad" width="0%">{{$ped->tamanio}}</td>
+                            <td class="unidad" width="0%">${{$ped->precio}}</td>
                             <td class="cantidad" width="0%">{{$ped->cantidad}}</td>
-                            <td class="total" width="0%">{{$ped->cantidad}}</td>
+                            <td class="total" width="0%">${{($ped->precio * $ped->cantidad)+($ped->tamanio*4)}}</td>
                         </tr> 
-                        <?php $total= $total + $ped->cantidad   ?>
+                        <?php $total= $total + (($ped->precio * $ped->cantidad) + ($ped->tamanio*4)) ?>
                     @endforeach    
                 </tr>
             </tbody>
@@ -47,7 +47,7 @@
 
           <tfoot>
             <td colspan="3" class="preciofinal">PRECIO FINAL</td>
-            <td class="preciofinal">{{$total}}</td>
+            <td class="preciofinal">${{$total}}</td>
           </tfoot>
         </tbody>
       </table>

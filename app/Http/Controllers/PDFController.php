@@ -13,7 +13,7 @@ class PDFController extends Controller{
         ->join('productos', 'pedidos.idproducto', '=', 'productos.id')
         ->where('idusuario','=',auth()->user()->id)
         ->where('estado','=', 'I')
-        ->select('pedidos.id', 'pedidos.idproducto','productos.descripcion', 'pedidos.tamanio','pedidos.cantidad')
+        ->select('pedidos.id', 'pedidos.idproducto','productos.descripcion', 'pedidos.tamanio','pedidos.cantidad','productos.precio')
         ->get();
 		
 		$pdf = PDF::loadView('pdf', compact('detallepedido'));
