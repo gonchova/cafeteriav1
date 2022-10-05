@@ -113,10 +113,8 @@
                     @endif
                 </form>   
            
-     
-                     
                 <div class="relative d-flex flex-column justify-center   items-center  sm:pt-0">     
-                    <table class="table table-default table-hover table-bordered caption-top table-sm align-middle " >
+                    <table id = "tablaItems" class="table table-default table-hover table-bordered caption-top table-sm align-middle " >
                         <caption class="mx-auto fw-bold fs-2 text-center ">Items del Pedido</caption>
                         <thead class="table-secondary header-col">
                             <tr class="wx-auto">
@@ -137,15 +135,10 @@
                                             <td>
                                                 <form name="form-elimina-pedido" action="{{route('EliminarLineaPedido', $ped->id)}}" method="POST">    
                                                     @csrf 
-                                                @method('DELETE')
-                                                
+                                                    @method('DELETE')
                                                     <button type="submit"  name="btnEliminar" class="btn btn-danger" value="#">X</button>
-                                                
                                                 </form>
-                                            
-                                              
                                             </td> 
-
                                     </tr> 
                                 @endforeach    
                             </tr>
@@ -153,9 +146,12 @@
                     </table>
           
                     <div class="row mx-2">
-                        <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center ">Realizar Pedido</button>
+                        <form name="form-confirma-pedido"  action="{{route('ConfirmarPedido')}}" method="GET">    
+                            <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center" >Realizar Pedido</button>
+                        </form>
                     </div>
-                
+
+
                 </div>   
        
         </div>
@@ -190,6 +186,29 @@
             });*/
         });    
     </script-->
+    <script>
+
+        $(document).ready(function(){  
   
+                   /*Obtengo el idpaciente a eliminar ya que se pierde en el Modal*/
+           $('[name=btnConfirmar]').click(function(event){
+         
+                let tabla = document.getElementById('tablaItems');
+                let tfilas = tabla.getElementsByTagName('tbody')[0]; 
+                
+                if(tfilas.children.length<=1)
+                {   alert('Debe seleccionar al menos un producto');
+                    event.preventDefault();
+                }
+
+               
+           });
+    
+           
+        });
+    </script>  
+
+
+
 </html>
 @endsection

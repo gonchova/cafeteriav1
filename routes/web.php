@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Pedido;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +27,6 @@ Route::get('/home', [App\Http\Controllers\PedidosController::class,'index'])->na
 
 Route::get('/logout', [App\Http\Controllers\LogOutController::class,'perform'])->name('logout')->middleware('auth');;
 
-Route::delete('/pedidos/nuevopedido/{linea}',[App\Http\Controllers\PedidosController::class,'EliminarLineaPedido'])->name('EliminarLineaPedido')->middleware('auth');;
+Route::delete('/pedidos/nuevopedido/{pedido}',[App\Http\Controllers\PedidosController::class,'EliminarLineaPedido'])->name('EliminarLineaPedido')->middleware('auth');;
+
+Route::get('/Confirmacion', [App\Http\Controllers\PedidosController::class,'ConfirmarPedido'])->name('ConfirmarPedido')->middleware('auth');
