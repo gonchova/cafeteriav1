@@ -34,7 +34,7 @@
 
     <body class="antialiased">
         <div class="relative d-flex flex-column items-top justify-center  items-center py-4 sm:pt-0">
-           <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('pdf')}}" method="GET" >  
+           <form class="form-horizontal border border-3 rounded-3 shadow-lg"  action="{{route('nuevopedido')}}" method="GET" >  
                 <div class="row justify-center py-1">
                  <label class="fw-bold text-center">Pedido generado</label>  
                 </div>
