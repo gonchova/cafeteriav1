@@ -125,6 +125,11 @@ class PedidosController extends Controller
         ->select('pedidos.id', 'pedidos.idproducto','productos.descripcion', 'pedidos.tamanio','pedidos.cantidad','productos.precio')
         ->get();
 
+        
+      //  $tasks_controller = new PDFController;
+// Use other controller's method in this controller's method
+        //$tasks_controller->getPDF();
+
         DB::transaction(function () 
         {
             DB::table('pedidos')
@@ -133,7 +138,11 @@ class PedidosController extends Controller
             ->update(['estado' => 'C']);
         });
 
-       return view("pedidos.pdf",compact('detallepedido'));
+        //app(PDFController::class)->getPDF()
+        return view('pedidos.pdf',compact('detallepedido'));
+   
+
+       //return view("pedidos.pdf",compact('detallepedido'));
        
     }
 

@@ -156,7 +156,7 @@
                     </table>
           
                     <div class="row mx-2">
-                        <form name="form-confirma-pedido"  action="{{route('ConfirmarPedido')}}" method="GET">    
+                        <form name="form-confirma-pedido"  action="{{route('getPDF')}}" method="GET">    
                             <button type="submit"  name="btnConfirmar" class="btn btn-primary my-2  justify-center">Realizar Pedido</button>
                         </form>
                     </div>
@@ -218,7 +218,7 @@
                 }
         })
 
-            precioDesc.innerText = 'Precio: $'+ ((selectElement.options[selectElement.selectedIndex].id * cant) + (parseInt(tamanio) * 4) );
+        precioDesc.innerText = 'Precio: $'+ ((selectElement.options[selectElement.selectedIndex].id * cant) + (parseInt(tamanio) * 4 * cant) );
 
             
             //document.querySelector('.output').textContent = output;
